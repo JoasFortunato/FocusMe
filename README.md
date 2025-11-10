@@ -6,7 +6,6 @@ Transforme sua rotina de estudos com gamificação, rankings, metas e o método 
 - Características Principais
 - Tecnologias Usadas
 - Começando
-- Scripts Disponíveis
 - Contribuição
 - Contribuidores
 - Link do Projeto
@@ -32,7 +31,7 @@ A cada ciclo concluído, você ganha XP, acompanha seu progresso no dashboard e 
 - Clone este repositório:  
 `git clone https://github.com/joaovsilva18/FocusMe.git`
 
-#### Na Pasta FocusMes
+#### Na Pasta FocusMe
 - Instale as dependências:  
 `npm install`
 
