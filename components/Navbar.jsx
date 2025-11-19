@@ -1,14 +1,15 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
 
   const links = [
     { label: "Timer", href: "./" },
-    { label: "Progresso", href: "#" },
-    { label: "Ranking", href: "#" },
+    { label: "Progresso", href: "/progresso" },
+    { label: "Ranking", href: "/ranking" },
     { label: "Tasks", href: "/task" },
     { label: "Configurações", href: "#" },
   ];
@@ -17,10 +18,15 @@ export default function Navbar() {
     <>
       <nav className="fixed top-0 left-0 w-full bg-white/90 backdrop-blur-lg border-b border-white/40 shadow-md z-50">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <span className="text-2xl font-bold text-gray-800 tracking-wide">
-              FocusMe
-            </span>
+          <div className="flex items-center gap-2 ml-2">
+            <Image
+              src="/images/Logo_FocusMe.png"
+              alt="FocusMe Logo"
+              width={150}
+              height={90}
+              className="object-contain"
+              priority
+            />
           </div>
           <ul className="hidden md:flex items-center gap-8 text-gray-700 font-medium">
             {links.map((l) => (
@@ -64,9 +70,8 @@ export default function Navbar() {
           </button>
         </div>
         <div
-          className={`md:hidden w-full bg-white/95 border-t border-white/30 overflow-hidden transition-[max-height,opacity] duration-300 ease-in-out ${
-            open ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
-          }`}
+          className={`md:hidden w-full bg-white/95 border-t border-white/30 overflow-hidden transition-[max-height,opacity] duration-300 ease-in-out ${open ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+            }`}
         >
           <div className="px-6 py-4">
             <ul className="flex flex-col gap-3 text-gray-700 font-medium">
