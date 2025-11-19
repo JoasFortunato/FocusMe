@@ -8,10 +8,12 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="pt-BR">
-      <body>
-        <Navbar></Navbar>
-        <main className="pt-16">{children}</main>
+    <html lang="pt-BR" className="h-full overflow-hidden">
+      <body className="h-full pt-16 overflow-hidden">
+        <Navbar />
+        <main className="h-[calc(100vh-4rem)] overflow-hidden">
+          {children}
+        </main>
       </body>
     </html>
   );
