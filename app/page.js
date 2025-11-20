@@ -8,7 +8,7 @@ const POMODORO_DURATION = 25 * 60;
 const SHORT_DURATION = 5 * 60;
 const LONG_DURATION = 15 * 60;
 
-export default function PomodoroUI() {
+export default function Home() {
   const [active, setActive] = useState("Pomodoro");
   const [time, setTime] = useState(POMODORO_DURATION);
   const [isRunning, setIsRunning] = useState(false);
