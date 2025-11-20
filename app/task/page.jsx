@@ -1,3 +1,4 @@
+import Navbar from "@/components/Navbar";
 import CardTaskPrincipal from "@/app/task/_components/cardTaskPrincipal"
 import CardTaskSecundaria from "@/app/task/_components/cardTaskSecundaria"
 import BotaoCriarTask from "@/app/task/_components/botaoCriarTask"
@@ -5,6 +6,7 @@ import BotaoCriarTask from "@/app/task/_components/botaoCriarTask"
 export default function TaskPage() {
   return (
     <div className="bg-black min-h-screen pt-16 px-6">
+      <Navbar />
           <div className="flex justify-center ml-52 mb-4"><h2 className="text-white font-medium bg-purple-600 p-2 rounded-full pl-4 pr-4">Histórico de Tasks</h2></div>
         <div className="flex gap-8 items-start">
         <div className="w-full md:w-1/2 ml-16">

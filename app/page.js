@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Play, Pause, ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
+import Navbar from "@/components/Navbar";
 
 const POMODORO_DURATION = 25 * 60;
 const SHORT_DURATION = 5 * 60;
@@ -64,8 +65,7 @@ export default function PomodoroUI() {
 
   return (
    <div className="min-h-screen w-full bg-night flex flex-col items-center pt-10 text-white select-none">
-
-  {/* BOTOES DO TOPO */}
+  <Navbar />
   <div className="flex gap-4 mb-10">
     {[
       { label: "Pomodoro" },
