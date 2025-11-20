@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -71,12 +72,14 @@ export default function LoginPage() {
             />
           </div>
 
-          <button
-            type="submit"
-            className="bg-purple-600 text-white p-2 rounded-lg hover:bg-purple-700 transition"
-          >
-            Entrar
-          </button>
+          <Link href="./" className="w-full block">
+            <button
+              type="button"
+              className="w-full bg-purple-600 text-white p-2 rounded-lg hover:bg-purple-700 transition"
+            >
+              Entrar
+            </button>
+          </Link>
         </form>
 
         {erro && (
@@ -87,7 +90,7 @@ export default function LoginPage() {
 
         <p className="text-center text-sm mt-4">
           Não possui conta?{" "}
-          <a href="/register" className="text-blue-600 hover:underline">
+          <a href="/Cadastro" className="text-blue-600 hover:underline">
             Cadastre-se aqui
           </a>
         </p>

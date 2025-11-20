@@ -1,4 +1,5 @@
 "use client";
+import Navbar from "@/components/Navbar";
 import Card from "./_components/Card";
 import GraficoSemanal from "./_components/GraficoSemanal";
 import GraficoMensal from "./_components/GraficoMensal";
@@ -35,7 +36,10 @@ export default function Progresso() {
   const donut = [{ name: "Focus", value: 60 }, { name: "Rest", value: 40 }];
 
   return (
-    <div className="min-h-screen p-8">
+  <>
+    <Navbar />
+
+    <div className="min-h-screen p-8 pt-16">
       <h1 className="text-3xl font-bold mb-6">Seu Progresso</h1>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
@@ -56,5 +60,7 @@ export default function Progresso() {
         </div>
       </div>
     </div>
-  );
+  </>
+);
+
 }

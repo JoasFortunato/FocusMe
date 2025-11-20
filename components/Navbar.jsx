@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -16,7 +17,7 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="fixed top-0 left-0 w-full bg-white/90 backdrop-blur-lg border-b border-white/40 shadow-md z-50">
+      <nav className="fixed top-0 left-0 w-full bg-white z-50">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2 ml-2">
             <Image
@@ -35,9 +36,11 @@ export default function Navbar() {
               </li>
             ))}
           </ul>
-          <button className="hidden md:flex px-5 py-2 bg-indigo-600 hover:bg-indigo-700 transition text-white rounded-xl shadow-md active:scale-95">
-            Login
-          </button>
+          <Link href="/Login">
+            <button className="hidden md:flex px-5 py-2 bg-indigo-600 hover:bg-indigo-700 transition text-white rounded-xl shadow-md active:scale-95">
+              Login
+            </button>
+          </Link>
           <button
             className="md:hidden p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-400"
             aria-label={open ? "Fechar menu" : "Abrir menu"}
@@ -88,7 +91,7 @@ export default function Navbar() {
               ))}
               <li>
                 <a
-                  href="#"
+                  href="/Login"
                   onClick={() => setOpen(false)}
                   className="inline-block mt-2 px-4 py-2 bg-indigo-600 text-white rounded-xl shadow-md hover:bg-indigo-700 transition"
                 >

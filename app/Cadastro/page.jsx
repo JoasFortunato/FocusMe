@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import TelaCarregar from "../Cadastro/_components/telaCarregar";
+import Link from "next/link";
 
 export default function CadastrarPage() {
   const router = useRouter();
@@ -84,12 +85,14 @@ export default function CadastrarPage() {
             />
           </div>
 
-          <button
-            type="submit"
-            className="bg-purple-600 text-white p-2 rounded-lg hover:bg-blue-700 transition"
-          >
-            Entrar
-          </button>
+          <Link href="./" className="w-full block">
+  <button
+    type="button"
+    className="w-full bg-purple-600 text-white p-2 rounded-lg hover:bg-purple-700 transition"
+  >
+    Entrar
+  </button>
+</Link>
         </form>
 
         {erro && (
@@ -100,7 +103,7 @@ export default function CadastrarPage() {
 
         <p className="text-center text-sm mt-4">
           Já possui conta?{" "}
-          <a href="/register" className="text-blue-600 hover:underline">
+          <a href="/Login" className="text-blue-600 hover:underline">
             Faça seu login
           </a>
         </p>
