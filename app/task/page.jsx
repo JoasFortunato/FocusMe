@@ -1,5 +1,6 @@
 "use client"
 import { useState } from "react"
+import Navbar from "@/components/Navbar";
 import CardTaskPrincipal from "@/app/task/_components/cardTaskPrincipal"
 import CardTaskSecundaria from "@/app/task/_components/cardTaskSecundaria"
 import BotaoCriarTask from "@/app/task/_components/botaoCriarTask"

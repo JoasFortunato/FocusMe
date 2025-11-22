@@ -1,4 +1,3 @@
-import Navbar from "@/components/Navbar";
 import "./globals.css";
 
 export const metadata = {
@@ -8,10 +7,9 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="pt-BR">
-      <body>
-        <Navbar></Navbar>
-        <main className="pt-16">{children}</main>
+    <html lang="pt-BR" className="h-full">
+      <body className="h-full">
+        {children}
       </body>
     </html>
   );
