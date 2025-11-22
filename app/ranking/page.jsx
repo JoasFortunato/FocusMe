@@ -21,16 +21,11 @@ export default function Ranking() {
 
   return (
     <>
-      {/* NAVBAR FIXA */}
       <Navbar />
-
       <div className="min-h-screen w-full bg-[#0F0F0F] pt-20 flex items-center justify-center">
         <div className="flex items-center justify-center w-full">
-          {/* CARD PRINCIPAL */}
           <div className="bg-[#F6F6F6] rounded-2xl rounded-b-none relative flex flex-col items-center w-[45rem] h-[32rem] mt-20">
-            {/* PÓDIO */}
             <div className="flex items-end gap-6 mt-8">
-              {/* SEGUNDO */}
               <div className="h-[11rem] w-[8rem] bg-[#8B5CF6] rounded-lg flex flex-col items-center justify-between p-3 hover:scale-110 transition">
                 <Image
                   src={segundo.avatar}
@@ -57,8 +52,6 @@ export default function Ranking() {
                   alt="Trofeu segundo lugar"
                 />
               </div>
-
-              {/* PRIMEIRO */}
               <div className="h-[13rem] w-[8rem] bg-[#8B5CF6] rounded-lg flex flex-col items-center justify-between p-3 hover:scale-110 transition">
                 <Image
                   src={primeiro.avatar}
@@ -85,8 +78,6 @@ export default function Ranking() {
                   alt="Trofeu primeiro lugar"
                 />
               </div>
-
-              {/* TERCEIRO */}
               <div className="h-[10rem] w-[8rem] bg-[#8B5CF6] rounded-lg flex flex-col items-center justify-between p-3 hover:scale-110 transition">
                 <Image
                   src={terceiro.avatar}
@@ -114,13 +105,9 @@ export default function Ranking() {
                 />
               </div>
             </div>
-
-            {/* TÍTULO */}
             <div className="h-[2rem] p-1 absolute -top-5 bg-[#F6F6F6] w-[13rem] flex justify-center rounded-2xl shadow-md">
               <h1 className="text-center font-semibold">RANKING BOARD</h1>
             </div>
-
-            {/* TABELA */}
             <table className="w-[38rem] h-[13rem] mt-12 bg-[#7C3AED] rounded-lg overflow-hidden">
               <thead>
                 <tr className="text-white text-xs">
@@ -129,16 +116,14 @@ export default function Ranking() {
                   <th className="px-4 py-2">HORAS</th>
                 </tr>
               </thead>
-
               <tbody className="font-semibold">
                 {tabela.map((item, index) => (
                   <tr
                     key={index}
-                    className={`text-[0.75rem] ${
-                      index % 2 === 0
+                    className={`text-[0.75rem] ${index % 2 === 0
                         ? "bg-[#F6F6F6] text-[#8B5CF6]"
                         : "bg-[#8B5CF6] text-white"
-                    }`}
+                      }`}
                   >
                     <td className="text-center">{index + 4}</td>
                     <td className="flex items-center gap-2 w-20 mx-auto">
