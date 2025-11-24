@@ -35,7 +35,7 @@ export default function LoginPage() {
     >
       <div className="w-1/2 flex items-center justify-center">
         <Image
-          src="/images/DK.png"
+          src="/images/logo.png"
           width={400}
           height={400}
           alt="Ilustração"
@@ -47,7 +47,6 @@ export default function LoginPage() {
         <h1 className="text-2xl font-bold text-center mb-6">Login</h1>
 
         <form onSubmit={handleLogin} className="flex flex-col gap-4">
-
           <div>
             <label className="block text-sm font-medium">Email</label>
             <input
@@ -83,9 +82,7 @@ export default function LoginPage() {
         </form>
 
         {erro && (
-          <p className="text-red-600 text-center mt-2 font-semibold">
-            {erro}
-          </p>
+          <p className="text-red-600 text-center mt-2 font-semibold">{erro}</p>
         )}
 
         <p className="text-center text-sm mt-4">

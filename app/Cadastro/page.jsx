@@ -37,7 +37,7 @@ export default function CadastrarPage() {
     >
       <div className="w-1/2 flex items-center justify-center">
         <Image
-          src="/images/DK.png"
+          src="/images/logo.png"
           width={400}
           height={400}
           alt="Ilustração"
@@ -85,20 +85,18 @@ export default function CadastrarPage() {
             />
           </div>
 
-          <Link href="./" className="w-full block">
-  <button
-    type="button"
-    className="w-full bg-purple-600 text-white p-2 rounded-lg hover:bg-purple-700 transition"
-  >
-    Entrar
-  </button>
-</Link>
+          <Link href="/Foto" className="w-full block">
+            <button
+              type="button"
+              className="w-full bg-purple-600 text-white p-2 rounded-lg hover:bg-purple-700 transition"
+            >
+              Entrar
+            </button>
+          </Link>
         </form>
 
         {erro && (
-          <p className="text-red-600 text-center mt-2 font-semibold">
-            {erro}
-          </p>
+          <p className="text-red-600 text-center mt-2 font-semibold">{erro}</p>
         )}
 
         <p className="text-center text-sm mt-4">
