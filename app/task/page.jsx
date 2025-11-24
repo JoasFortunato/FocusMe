@@ -23,7 +23,7 @@ export default function TaskPage() {
     <>
       <Navbar />
       <div className="bg-black min-h-screen w-full pt-20 px-6">
-        <div className="flex justify-center mb-6">
+        <div className="flex justify-center ml-48 mb-6">
           <h2 className="text-white font-medium bg-[#7C3AED] p-2 rounded-full px-6">
             Histórico de Tasks
           </h2>
