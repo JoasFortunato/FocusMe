@@ -1,160 +1,107 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Navbar() {
+  const [open, setOpen] = useState(false);
+
+  const links = [
+    { label: "Timer", href: "./" },
+    { label: "Progresso", href: "/progresso" },
+    { label: "Ranking", href: "/ranking" },
+    { label: "Tasks", href: "/task" },
+    { label: "Configurações", href: "#" },
+  ];
+
   return (
-    <nav className="bg-neutral-primary fixed w-full z-20 top-0 start-0 border-b border-default">
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <a
-          href="https://flowbite.com/"
-          className="flex items-center space-x-3 rtl:space-x-reverse"
-        >
-         <Image
-         src="/logo.png"
-            className="h-7"
-            width={32}
-              height={32}
-            alt="Flowbite Logo"
-         />
-          <span className="self-center text-xl text-heading font-semibold whitespace-nowrap">
-            FocusMe
-          </span>
-        </a>
-
-        <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-          <button
-            type="button"
-            className="flex text-sm bg-neutral-primary rounded-full md:me-0 focus:ring-4 focus:ring-neutral-tertiary"
-            id="user-menu-button"
-            aria-expanded="false"
-            data-dropdown-toggle="user-dropdown"
-            data-dropdown-placement="bottom"
-          >
+    <>
+      <nav className="fixed top-0 left-0 w-full bg-white z-50">
+        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-2 ml-2">
             <Image
-              className="w-8 h-8 rounded-full"
-              src="/logo.png"
-              alt="user photo"
-              width={32}
-              height={32}
+              src="/images/Logo_FocusMe.png"
+              alt="FocusMe Logo"
+              width={150}
+              height={90}
+              className="object-contain"
+              priority
             />
-          </button>
-
-          <div
-            className="z-50 hidden bg-neutral-primary-medium border border-default-medium rounded-base shadow-lg w-44"
-            id="user-dropdown"
+          </div>
+          <ul className="hidden md:flex items-center gap-8 text-gray-700 font-medium">
+            {links.map((l) => (
+              <li key={l.label} className="hover:text-indigo-600 transition">
+                <a href={l.href}>{l.label}</a>
+              </li>
+            ))}
+          </ul>
+          <Link href="/Login">
+            <button className="hidden md:flex px-5 py-2 bg-indigo-600 hover:bg-indigo-700 transition text-white rounded-xl shadow-md active:scale-95">
+              Login
+            </button>
+          </Link>
+          <button
+            className="md:hidden p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-400"
+            aria-label={open ? "Fechar menu" : "Abrir menu"}
+            aria-expanded={open}
+            onClick={() => setOpen((v) => !v)}
           >
-            <div className="px-4 py-3 text-sm border-b border-default">
-              <span className="block text-heading font-medium">Joseph McFall</span>
-              <span className="block text-body truncate">name@flowbite.com</span>
-            </div>
-            <ul
-              className="p-2 text-sm text-body font-medium"
-              aria-labelledby="user-menu-button"
-            >
+            {open ? (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-7 h-7 text-gray-700"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={1.8}
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            ) : (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-7 h-7 text-gray-700"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.8}
+                stroke="currentColor"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            )}
+          </button>
+        </div>
+        <div
+          className={`md:hidden w-full bg-white/95 border-t border-white/30 overflow-hidden transition-[max-height,opacity] duration-300 ease-in-out ${open ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+            }`}
+        >
+          <div className="px-6 py-4">
+            <ul className="flex flex-col gap-3 text-gray-700 font-medium">
+              {links.map((l) => (
+                <li key={l.label}>
+                  <a
+                    href={l.href}
+                    onClick={() => setOpen(false)}
+                    className="block py-2 px-3 rounded-md hover:bg-indigo-50 hover:text-indigo-600 transition"
+                  >
+                    {l.label}
+                  </a>
+                </li>
+              ))}
               <li>
                 <a
-                  href="#"
-                  className="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded"
+                  href="/Login"
+                  onClick={() => setOpen(false)}
+                  className="inline-block mt-2 px-4 py-2 bg-indigo-600 text-white rounded-xl shadow-md hover:bg-indigo-700 transition"
                 >
-                  Dashboard
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded"
-                >
-                  Settings
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded"
-                >
-                  Earnings
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded"
-                >
-                  Sign out
+                  Login
                 </a>
               </li>
             </ul>
           </div>
-
-          <button
-            data-collapse-toggle="navbar-user"
-            type="button"
-            className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-body rounded-base md:hidden hover:bg-neutral-secondary-soft hover:text-heading focus:outline-none focus:ring-2 focus:ring-neutral-tertiary"
-            aria-controls="navbar-user"
-            aria-expanded="false"
-          >
-            <span className="sr-only">Open main menu</span>
-            <svg
-              className="w-6 h-6"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeWidth="2"
-                d="M5 7h14M5 12h14M5 17h14"
-              />
-            </svg>
-          </button>
         </div>
-
-        <div
-          className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
-          id="navbar-user"
-        >
-          <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-default rounded-base bg-neutral-secondary-soft md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-neutral-primary">
-            <li>
-              <a
-                href="#"
-                className="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0"
-                aria-current="page"
-              >
-                Timer
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0"
-              >
-                Progresso
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0"
-              >
-                Ranking
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0"
-              >
-                Tasks
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+      </nav>
+    </>
   );
 }
