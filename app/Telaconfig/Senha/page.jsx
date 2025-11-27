@@ -39,29 +39,16 @@ export default function ChangePasswordPage() {
         <div className="mt-8 space-y-8">
 
           
-          <div className="flex flex-col gap-2">
-            <Label className="font-bold text-lg text-gray-900 mb-1">Senha atual</Label>
-            <div className="flex items-center bg-gray-300 rounded-full px-8 py-4">
-              <Input
-                type="password"
-                value={currentPassword}
-                onChange={(e) => setCurrentPassword(e.target.value)}
-                className="bg-transparent border-none shadow-none outline-none text-gray-900 placeholder:text-gray-700"
-                placeholder="*************"
-                disabled
-              />
-            </div>
-          </div>
-
+        
           
-          <div className="flex flex-col gap-2">
-            <Label className="font-bold text-lg text-gray-900 mb-1">Alterar Senha</Label>
-            <div className="flex items-center bg-gray-300 rounded-full px-8 py-4">
+          <div className="flex flex-col gap-0">
+            <Label className="font-bold ml-10 text-lg text-gray-900 mb-0">Alterar Senha</Label>
+            <div className="flex items-center bg-transparent rounded-full px-8 py-2">
               <Input
                 type="password"
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
-                className="bg-transparent border-none shadow-none outline-none text-gray-900 placeholder:text-gray-700 flex-1"
+                className="bg-gray-300 border-none shadow-none outline-none text-gray-900 placeholder:text-gray-700 flex-1"
                 placeholder="*************"
               />
               <Button
@@ -74,14 +61,14 @@ export default function ChangePasswordPage() {
           </div>
 
           
-          <div className="flex flex-col gap-2">
-            <Label className="font-bold text-lg text-gray-900 mb-1">Confirmar Senha</Label>
-            <div className="flex items-center bg-gray-300 rounded-full px-8 py-4">
+          <div className="flex flex-col gap-0">
+            <Label className="font-bold ml-10 text-lg text-gray-900 mb-0">Confirmar Senha</Label>
+            <div className="flex items-center bg-transparentrounded-full px-8 py-2">
               <Input
                 type="password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className="bg-transparent border-none shadow-none outline-none text-gray-900 placeholder:text-gray-700 flex-1"
+                className="bg-gray-300 border-none shadow-none outline-none text-gray-900 placeholder:text-gray-700 flex-1"
                 placeholder="*************"
               />
               <Button
