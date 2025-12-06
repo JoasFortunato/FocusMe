@@ -27,7 +27,8 @@ export default function ConfirmarCompleteModal({
       className="fixed inset-0 z-50 flex items-center justify-center bg-[#2a0f48]/95"
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
-      <div className="w-full h-full flex items-center justify-center p-6" onClick={(e) => e.stopPropagation()}>
+      <div className="w-full h-full flex items-center justify-center p-6" 
+      onClick={(e) => e.stopPropagation()}>
         <div className="max-w-lg w-full text-center space-y-4">
           <h2 className="text-xs text-white/80 tracking-wider font-bold">{title}</h2>
 

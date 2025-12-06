@@ -4,6 +4,12 @@ import CardTaskPrincipal from "@/app/task/_components/cardTaskPrincipal"
 import CardTaskSecundaria from "@/app/task/_components/cardTaskSecundaria"
 import { useState } from "react";
 
+//helper pra calcular o proximo id
+function getNextId(list){
+  return list.length ? Math.max(...list.map(t => t.id)) + 1 : 1
+}
+
+
 export default function TaskPage() {
   const [mainTasks, setMainTasks] = useState([
     {id: 1, title: "Task principal 1", done: false},
@@ -25,6 +31,31 @@ export default function TaskPage() {
   ],
 },
 ])
+
+// adicionar task
+function addTask(cardId, title) {
+    if (cardId === null) { //principal
+      const newTask = { id: getNextId(mainTasks), title, done: false }
+      setMainTasks(prev => [newTask, ...prev])
+    } else { //secundario
+      setCards(prev => prev.map(card => card.id === cardId ? {
+        ...card,tasks: [{id: getNextId(card.tasks), title, done: false}, ...card.tasks] } :card))
+    }
+  }
+
+
+  //funcao para marcar task como concluida
+  function toggleTask(cardId, taskId, checked) {
+    const update = t => (t.id === taskId ? { ...t, done: !!checked } : t)
+
+    if (cardId === null) { 
+      setMainTasks(prev => prev.map(update))
+    } else {
+      setCards(prev => prev.map(card =>
+        card.id === cardId
+          ? {...card, tasks: card.tasks.map(t =>t.id === taskId ? { ...t, done: !!checked } : t)}: card))
+    }
+  }
 
   //criação de novos cards
   const [showNewCardModal, setShowNewCardModal] =useState(false)
@@ -50,19 +81,15 @@ export default function TaskPage() {
 
         const clickedCard = prev[index]
 
-        //troca as tasks
-        const newMain = clickedCard.tasks
-        const newClicked = mainTasks
-
-        setMainTasks(newMain) //task atualizada
+        setMainTasks(clickedCard.tasks) //task atualizadas
         setMainTitle(clickedCard.title) //titulo atualizado
 
         const updated = [...prev]
-        updated[index] ={...clickedCard, tasks: newClicked}
-
+        updated[index] = {...clickedCard, tasks: mainTasks}
         return updated
       })
     }
+
   return (
     <>
       <Navbar />
@@ -89,16 +116,16 @@ export default function TaskPage() {
               value={newCardTitle}
               onChange={e => setNewCardTitle(e.target.value)}
               placeholder="Título do card"
-              className="w-full p-2 border rounded mb-4"/>
+              className="w-full p-2 border rounded mb-4 bg-transparent "/>
               <div className="flex justify-end gap-3">
                 <button
                 onClick={() => setShowNewCardModal(false)}
-                className="px-4 py-2 bg-gray-200 rounded">
+                className="px-3 py-1 border rounded">
                   Cancelar
                 </button>
                 <button
                 onClick={handleCreateCard}
-                className="px-4 py-2 bg-[#7C3AED] text-white rounded ">
+                className="px-3 py-1 bg-[#7C3AED] text-white rounded ">
                   Criar
                 </button>
               </div>
@@ -108,7 +135,11 @@ export default function TaskPage() {
 
         <div className="flex flex-col lg:flex-row gap-8 items-start">
           <div className="w-full lg:w-1/2">
-            <CardTaskPrincipal tasks= {mainTasks} title = {mainTitle} />
+            <CardTaskPrincipal 
+            tasks= {mainTasks} 
+            title = {mainTitle}
+            onAdd = {(title) => addTask(null, title)}
+            onToggle = {(id, checked) => toggleTask(null, id, checked)} />
           </div>
 
           <div className="flex flex-col gap-8 w-full lg:w-1/2">
@@ -118,7 +149,9 @@ export default function TaskPage() {
               id={card.id}
               title={card.title}
               tasks={card.tasks}
-              onSwap={swapCard}/>
+              onSwap={swapCard}
+              onAddTask={(cardId, title) => addTask(cardId, title)}
+              onToggleTask={(cardId, taskId, checked) => toggleTask(cardId, taskId, checked)}/>
             ))}
           </div>
         </div>

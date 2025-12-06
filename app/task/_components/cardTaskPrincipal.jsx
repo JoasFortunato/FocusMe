@@ -1,31 +1,14 @@
 "use client"
-import { useState,useEffect } from "react"
+import { useState } from "react"
 import confetti from "canvas-confetti"
 import { Checkbox } from "@/components/ui/checkbox"
 import NewTaskModal from "./newTaskModal"
 import BotaoCriarTask from "./botaoCriarTask"
 import ConfirmarCompleteModal from "./confirmarCompleteModal"
 
-export default function CardTaskPrincipal({tasks: initialTasks, title}) {
-  const [tasks, setTasks] = useState(initialTasks)
+export default function CardTaskPrincipal({tasks, title, onAdd, onToggle}) {
   const [showAddModal, setShowAddModal] = useState(false)
   const [showConfirmModal, setShowConfirmModal] = useState(false)
-
-
-  //quando o swap alterar as tasks
-  useEffect(()=> {
-    setTasks(initialTasks)
-  },[initialTasks])
-
-  function handleAdd({ title }) {
-    const nextId = tasks.length ? Math.max(...tasks.map(t => t.id)) + 1 : 1
-    setTasks(prev => [{ id: nextId, title, done: false }, ...prev])
-    setShowAddModal(false)
-  }
-
-  function toggleDone(id, checked) {
-    setTasks(prev => prev.map(t => (t.id === id ? { ...t, done: !!checked } : t)))
-  }
 
   const allDone = tasks.length > 0 && tasks.every(t => t.done)
 
@@ -75,23 +58,25 @@ export default function CardTaskPrincipal({tasks: initialTasks, title}) {
     setShowConfirmModal(true)
   }
 
-  function handleNextTask() {
-    setShowConfirmModal(false)
-  }
-
   return (
     <section className="relative bg-white rounded-2xl shadow-lg p-6 w-full max-w-xl border-l-4 border-purple-400">
       <BotaoCriarTask onClick={() => setShowAddModal(true)} />
+
       {showAddModal && (
-      <NewTaskModal 
-      initialText="" 
-      onClose={() => setShowAddModal(false)} 
-      onSave={handleAdd} />)}
+      <NewTaskModal
+          initialText=""
+          onClose={() => setShowAddModal(false)}
+          onSave={({ title }) => {
+            onAdd(title) //chama a funcao do pai
+            setShowAddModal(false)
+          }}
+        />
+      )}
 
       {showConfirmModal && (
         <ConfirmarCompleteModal
           onClose={() => setShowConfirmModal(false)}
-          onNext={handleNextTask}
+          onNext={() => setShowConfirmModal(false)}
           xp={10}
           title="VOCÊ MANDOU BEM!!"
           subtitle="Mais um passo em direção ao topo"
@@ -112,7 +97,9 @@ export default function CardTaskPrincipal({tasks: initialTasks, title}) {
         {tasks.map(task => (
           <li key={task.id} className="flex items-center">
             <span className="w-1.5 h-7 bg-[#7C3AED] rounded mr-4" />
-            <Checkbox checked={task.done} onCheckedChange={c => toggleDone(task.id, c)} className="mr-3" />
+            <Checkbox checked={task.done}
+             onCheckedChange={c => onToggle(task.id, c)} 
+             className="mr-3" />
             <span className={`ml-3 text-lg font-medium ${task.done ? "line-through text-gray-400" : ""}`}>
               {task.title}
             </span>
