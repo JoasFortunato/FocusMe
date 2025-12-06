@@ -4,9 +4,12 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
+import { useAuth } from "@/hooks/useAuth";
+
 
 export default function LoginPage() {
   const router = useRouter();
+  const { login } = useAuth();
 
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
@@ -20,7 +23,14 @@ export default function LoginPage() {
       return;
     }
 
-    router.push("/home");
+    const resultado = login(email, senha);
+
+    if (!resultado.ok) {
+      setErro(resultado.msg);
+      return;
+    }
+
+    router.push("./");
   };
 
   return (
@@ -47,6 +57,7 @@ export default function LoginPage() {
         <h1 className="text-2xl font-bold text-center mb-6">Login</h1>
 
         <form onSubmit={handleLogin} className="flex flex-col gap-4">
+
           <div>
             <label className="block text-sm font-medium">Email</label>
             <input
@@ -55,7 +66,6 @@ export default function LoginPage() {
               className="w-full p-2 border rounded-lg mt-1 bg-white focus:ring-2 focus:ring-purple-500"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              required
             />
           </div>
 
@@ -67,18 +77,15 @@ export default function LoginPage() {
               className="w-full p-2 border rounded-lg mt-1 bg-white focus:ring-2 focus:ring-purple-500"
               value={senha}
               onChange={(e) => setSenha(e.target.value)}
-              required
             />
           </div>
 
-          <Link href="./" className="w-full block">
-            <button
-              type="button"
-              className="w-full bg-[#7C3AED] text-white p-2 rounded-lg hover:bg-[#752df1] transition"
-            >
-              Entrar
-            </button>
-          </Link>
+          <button
+            type="submit"
+            className="w-full bg-[#7C3AED] text-white p-2 rounded-lg hover:bg-[#752df1] transition"
+          >
+            Entrar
+          </button>
         </form>
 
         {erro && (
