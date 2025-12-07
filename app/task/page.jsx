@@ -9,15 +9,7 @@ function getNextId(list){
   return list.length ? Math.max(...list.map(t => t.id)) + 1 : 1
 }
 
-
 export default function TaskPage() {
-  const [mainTasks, setMainTasks] = useState([
-    {id: 1, title: "Task principal 1", done: false},
-    {id: 2, title: "Task principal 2", done: false},
-  ])
-  //muda os titulos dinamicamente
-  const [mainTitle, setMainTitle] = useState("Principal")
-
   const [cards, setCards] = useState([
     {id: 101, title: "Weekly tasks", tasks: [
       {id: 1, title: "Resolver 5 exercícios", done: false},
@@ -32,30 +24,30 @@ export default function TaskPage() {
 },
 ])
 
+// guarda qual card ta ativo como principal
+const [activeCardId, setActiveCardId] = useState(null)
+
 // adicionar task
 function addTask(cardId, title) {
-    if (cardId === null) { //principal
-      const newTask = { id: getNextId(mainTasks), title, done: false }
-      setMainTasks(prev => [newTask, ...prev])
-    } else { //secundario
-      setCards(prev => prev.map(card => card.id === cardId ? {
-        ...card,tasks: [{id: getNextId(card.tasks), title, done: false}, ...card.tasks] } :card))
-    }
-  }
+  if (!cardId) return
+  setCards(prev => {
+    if (!Array.isArray(prev)) return prev
+    return prev.map(card =>
+      card.id === cardId
+        ? {...card, tasks: [{id: getNextId(card.tasks), title, done: false}, ...card.tasks]}
+        : card
+    )
+  })
+}
 
 
   //funcao para marcar task como concluida
   function toggleTask(cardId, taskId, checked) {
-    const update = t => (t.id === taskId ? { ...t, done: !!checked } : t)
-
-    if (cardId === null) { 
-      setMainTasks(prev => prev.map(update))
-    } else {
-      setCards(prev => prev.map(card =>
-        card.id === cardId
-          ? {...card, tasks: card.tasks.map(t =>t.id === taskId ? { ...t, done: !!checked } : t)}: card))
+      setCards(prev => prev.map(card => card.id === cardId ? {
+        ...card, tasks: card.tasks.map(t => t.id === taskId ? {...t, done: !!checked} : t)}
+      : card
+    ))
     }
-  }
 
   //criação de novos cards
   const [showNewCardModal, setShowNewCardModal] =useState(false)
@@ -72,23 +64,10 @@ function addTask(cardId, title) {
     setShowNewCardModal(false)
     }
 
-
-    //swap entre o card principal e secundario
-    function swapCard(cardId){
-      setCards(prev =>{
-        const index = prev.findIndex(c => c.id === cardId)
-        if (index === -1) return prev
-
-        const clickedCard = prev[index]
-
-        setMainTasks(clickedCard.tasks) //task atualizadas
-        setMainTitle(clickedCard.title) //titulo atualizado
-
-        const updated = [...prev]
-        updated[index] = {...clickedCard, tasks: mainTasks}
-        return updated
-      })
-    }
+    //pega o card ativo (ou null)
+    const activeCard = activeCardId
+    ? cards.find(c => c.id === activeCardId)
+    : null
 
   return (
     <>
@@ -135,11 +114,13 @@ function addTask(cardId, title) {
 
         <div className="flex flex-col lg:flex-row gap-8 items-start">
           <div className="w-full lg:w-1/2">
-            <CardTaskPrincipal 
-            tasks= {mainTasks} 
-            title = {mainTitle}
-            onAdd = {(title) => addTask(null, title)}
-            onToggle = {(id, checked) => toggleTask(null, id, checked)} />
+            {activeCard ? (
+              <CardTaskPrincipal 
+                tasks={activeCard.tasks} 
+                title={activeCard.title}
+                onAdd={(title) => addTask(activeCard.id, title)}
+                onToggle={(id, checked) => toggleTask(activeCard.id, id, checked)} />) : 
+                (<div className="text-white font-bold flex justify-center">Selecione um card para visualizar</div>)}
           </div>
 
           <div className="flex flex-col gap-8 w-full lg:w-1/2">
@@ -149,7 +130,7 @@ function addTask(cardId, title) {
               id={card.id}
               title={card.title}
               tasks={card.tasks}
-              onSwap={swapCard}
+              onSwap={() => setActiveCardId(card.id)} //agora so muda o ativo
               onAddTask={(cardId, title) => addTask(cardId, title)}
               onToggleTask={(cardId, taskId, checked) => toggleTask(cardId, taskId, checked)}/>
             ))}
