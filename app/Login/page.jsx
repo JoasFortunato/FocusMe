@@ -4,12 +4,9 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { useAuth } from "@/hooks/useAuth";
-
 
 export default function LoginPage() {
   const router = useRouter();
-  const { login } = useAuth();
 
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
@@ -18,19 +15,12 @@ export default function LoginPage() {
   const handleLogin = (e) => {
     e.preventDefault();
 
-    if (!email || !senha) {
-      setErro("Preencha todos os campos!");
+    if (!email.trim() || !senha.trim()) {
+      setErro("Preencha todos os campos obrigatórios!");
       return;
     }
 
-    const resultado = login(email, senha);
-
-    if (!resultado.ok) {
-      setErro(resultado.msg);
-      return;
-    }
-
-    router.push("./");
+    router.push("/home");
   };
 
   return (
@@ -40,7 +30,7 @@ export default function LoginPage() {
         bg-no-repeat bg-cover
       "
       style={{
-        backgroundImage: "linear-gradient(to right, #8B3DFF 50%, #000000 50%)",
+        backgroundImage: "linear-gradient(90deg, #8B3DFF 20%, #000000 90%)",
       }}
     >
       <div className="w-1/2 flex items-center justify-center">
@@ -53,11 +43,10 @@ export default function LoginPage() {
         />
       </div>
 
-      <div className="w-full max-w-sm bg-white rounded-2xl shadow-lg p-6 mr-[8rem]">
+      <div className="w-full max-w-sm bg-white rounded-2xl shadow-lg p-6 mr-[11rem] -mt-2">
         <h1 className="text-2xl font-bold text-center mb-6">Login</h1>
 
         <form onSubmit={handleLogin} className="flex flex-col gap-4">
-
           <div>
             <label className="block text-sm font-medium">Email</label>
             <input
@@ -66,6 +55,7 @@ export default function LoginPage() {
               className="w-full p-2 border rounded-lg mt-1 bg-white focus:ring-2 focus:ring-purple-500"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              required
             />
           </div>
 
@@ -77,12 +67,19 @@ export default function LoginPage() {
               className="w-full p-2 border rounded-lg mt-1 bg-white focus:ring-2 focus:ring-purple-500"
               value={senha}
               onChange={(e) => setSenha(e.target.value)}
+              required
             />
+
+            <p className="text-right text-sm mt-1">
+              <Link href="/recuperar-senha" className="text-blue-600 hover:underline">
+                Esqueceu a senha?
+              </Link>
+            </p>
           </div>
 
           <button
             type="submit"
-            className="w-full bg-[#7C3AED] text-white p-2 rounded-lg hover:bg-[#752df1] transition"
+            className="w-full bg-purple-600 text-white p-2 rounded-lg hover:bg-purple-700 transition"
           >
             Entrar
           </button>
@@ -94,7 +91,7 @@ export default function LoginPage() {
 
         <p className="text-center text-sm mt-4">
           Não possui conta?{" "}
-          <a href="/Cadastro" className="text-blue-500 hover:underline">
+          <a href="/Cadastro" className="text-blue-600 hover:underline">
             Cadastre-se aqui
           </a>
         </p>

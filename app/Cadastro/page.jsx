@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import TelaCarregar from "../Cadastro/_components/telaCarregar";
 import Link from "next/link";
 
 export default function CadastrarPage() {
@@ -17,11 +16,17 @@ export default function CadastrarPage() {
   const handleCadastrar = (e) => {
     e.preventDefault();
 
+    if (!email || !senha || !confirmeSenha) {
+      setErro("Preencha todos os campos obrigatórios!");
+      return;
+    }
+
     if (senha !== confirmeSenha) {
       setErro("As senhas não coincidem!");
       return;
     }
 
+    setErro("");
     router.push("/login");
   };
 
@@ -29,10 +34,10 @@ export default function CadastrarPage() {
     <div
       className="
         min-h-screen flex items-center justify-between 
-        bg-no-repeat 
+        bg-no-repeat bg-cover
       "
       style={{
-        backgroundImage: "linear-gradient(to right, #7C3AED 50%, #000000 50%)",
+        backgroundImage: "linear-gradient(90deg, #8B3DFF 20%, #000000 90%)",
       }}
     >
       <div className="w-1/2 flex items-center justify-center">
@@ -45,12 +50,13 @@ export default function CadastrarPage() {
         />
       </div>
 
-      <div className="w-full max-w-sm bg-white rounded-2xl shadow-lg p-6 mr-[8rem]">
+      <div className="w-full max-w-sm bg-white rounded-2xl shadow-lg p-6 mr-[11rem] -mt-2">
         <h1 className="text-2xl font-bold text-center mb-6">Crie sua conta</h1>
 
         <form onSubmit={handleCadastrar} className="flex flex-col gap-4">
+          
           <div>
-            <label className="block text-sm font-medium">Email</label>
+            <label className="block text-sm font-medium">Email *</label>
             <input
               type="email"
               placeholder="Digite o seu email"
@@ -62,7 +68,7 @@ export default function CadastrarPage() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium">Senha</label>
+            <label className="block text-sm font-medium">Senha *</label>
             <input
               type="password"
               placeholder="Digite sua senha"
@@ -74,7 +80,7 @@ export default function CadastrarPage() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium">Confirmar senha</label>
+            <label className="block text-sm font-medium">Confirmar senha *</label>
             <input
               type="password"
               placeholder="Confirme sua senha"
@@ -85,14 +91,12 @@ export default function CadastrarPage() {
             />
           </div>
 
-          <Link href="/Foto" className="w-full block">
-            <button
-              type="button"
-              className="w-full bg-[#7C3AED] text-white p-2 rounded-lg hover:bg-[#752df1]  transition"
-            >
-              Entrar
-            </button>
-          </Link>
+          <button
+            type="submit"
+            className="w-full bg-purple-600 text-white p-2 rounded-lg hover:bg-purple-700 transition"
+          >
+            Criar conta
+          </button>
         </form>
 
         {erro && (
@@ -101,7 +105,7 @@ export default function CadastrarPage() {
 
         <p className="text-center text-sm mt-4">
           Já possui conta?{" "}
-          <a href="/Login" className="text-blue-500 hover:underline">
+          <a href="/Login" className="text-blue-600 hover:underline">
             Faça seu login
           </a>
         </p>
