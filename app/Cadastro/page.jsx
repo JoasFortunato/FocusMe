@@ -42,7 +42,7 @@ export default function CadastrarPage() {
     >
       <div className="w-1/2 flex items-center justify-center">
         <Image
-          src="/images/logo.png"
+          src="/images/Logo_FocusMe.png"
           width={400}
           height={400}
           alt="Ilustração"

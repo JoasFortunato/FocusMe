@@ -1,17 +1,26 @@
 "use client"
+
 import { useState } from "react"
 import confetti from "canvas-confetti"
 import { Checkbox } from "@/components/ui/checkbox"
 import NewTaskModal from "./newTaskModal"
 import BotaoCriarTask from "./botaoCriarTask"
 import ConfirmarCompleteModal from "./confirmarCompleteModal"
+import { useAuth } from "@/hooks/useAuth"
 
-export default function CardTaskPrincipal({tasks, title, onAdd, onToggle}) {
+export default function CardTaskPrincipal({ tasks, title, onAdd, onToggle }) {
   const [showAddModal, setShowAddModal] = useState(false)
   const [showConfirmModal, setShowConfirmModal] = useState(false)
 
+  // impede XP duplicado
+  const [alreadyCompleted, setAlreadyCompleted] = useState(false)
+
+  const { adicionarXp } = useAuth()
+
+  // verifica se todas as tasks estão concluídas
   const allDone = tasks.length > 0 && tasks.every(t => t.done)
 
+  // confete animado
   function triggerConfetti(duration = 1500) {
     const end = Date.now() + duration
     const colors = ["#a786ff", "#fd8bbc", "#eca184", "#f8deb1"]
@@ -35,7 +44,6 @@ export default function CardTaskPrincipal({tasks, title, onAdd, onToggle}) {
         origin: { x: 1, y: 0.6 },
         colors,
       })
-
       confetti({
         particleCount: 8,
         angle: 90,
@@ -51,25 +59,39 @@ export default function CardTaskPrincipal({tasks, title, onAdd, onToggle}) {
     frame()
   }
 
-  function handleCompletarClick() {
-    if (!allDone) return
+  // quando clicar em completar
+  function handleCompleteClick() {
+    // se não terminou tudo ou já completou antes → bloqueia
+    if (!allDone || alreadyCompleted) return
 
+    adicionarXp(10)
     triggerConfetti(1500)
     setShowConfirmModal(true)
+
+    // impede ganhar XP novamente
+    setAlreadyCompleted(true)
+  }
+
+  // quando adicionar uma nova task → RESETAR recompensa
+  function handleAddTask(title) {
+    onAdd(title) // chama o pai para criar a task
+
+    // 👉 desbloquear novamente o botão completar
+    setAlreadyCompleted(false)
+
+    setShowAddModal(false)
   }
 
   return (
     <section className="relative bg-white rounded-2xl shadow-lg p-6 w-full max-w-xl border-l-4 border-purple-400">
+      
       <BotaoCriarTask onClick={() => setShowAddModal(true)} />
 
       {showAddModal && (
-      <NewTaskModal
+        <NewTaskModal
           initialText=""
           onClose={() => setShowAddModal(false)}
-          onSave={({ title }) => {
-            onAdd(title) //chama a funcao do pai
-            setShowAddModal(false)
-          }}
+          onSave={({ title }) => handleAddTask(title)}
         />
       )}
 
@@ -86,10 +108,10 @@ export default function CardTaskPrincipal({tasks, title, onAdd, onToggle}) {
 
       <header className="mb-4">
         <h2 className="text-2xl font-bold text-gray-800 mb-3">
-          {title} {" "} 
+          {title}{" "}
           <span className="font-normal text-gray-600">
             ({tasks.length} tasks)
-            </span>
+          </span>
         </h2>
       </header>
 
@@ -97,10 +119,16 @@ export default function CardTaskPrincipal({tasks, title, onAdd, onToggle}) {
         {tasks.map(task => (
           <li key={task.id} className="flex items-center">
             <span className="w-1.5 h-7 bg-[#7C3AED] rounded mr-4" />
-            <Checkbox checked={task.done}
-             onCheckedChange={c => onToggle(task.id, c)} 
-             className="mr-3" />
-            <span className={`ml-3 text-lg font-medium ${task.done ? "line-through text-gray-400" : ""}`}>
+            <Checkbox
+              checked={task.done}
+              onCheckedChange={checked => onToggle(task.id, checked)}
+              className="mr-3"
+            />
+            <span
+              className={`ml-3 text-lg font-medium ${
+                task.done ? "line-through text-gray-400" : ""
+              }`}
+            >
               {task.title}
             </span>
           </li>
@@ -109,9 +137,13 @@ export default function CardTaskPrincipal({tasks, title, onAdd, onToggle}) {
 
       <footer className="flex justify-end">
         <button
-          onClick={handleCompletarClick}
-          disabled={!allDone}
-          className={`px-4 py-2 rounded ${allDone ? "bg-[#7C3AED] text-white" : "bg-gray-200 text-gray-500 cursor-not-allowed opacity-60"}`}
+          onClick={handleCompleteClick}
+          disabled={!allDone || alreadyCompleted}
+          className={`px-4 py-2 rounded ${
+            allDone && !alreadyCompleted
+              ? "bg-[#7C3AED] text-white"
+              : "bg-gray-200 text-gray-500 cursor-not-allowed opacity-60"
+          }`}
         >
           Completar
         </button>
