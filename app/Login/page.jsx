@@ -79,7 +79,7 @@ export default function LoginPage() {
             />
 
             <p className="text-right text-sm mt-1">
-              <Link href="/recuperar-senha" className="text-blue-600 hover:underline">
+              <Link href="/Login/EsqueceuSenha" className="text-blue-600 hover:underline">
                 Esqueceu a senha?
               </Link>
             </p>
