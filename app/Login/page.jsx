@@ -4,9 +4,11 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function LoginPage() {
   const router = useRouter();
+  const { login } = useAuth(); 
 
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
@@ -19,8 +21,14 @@ export default function LoginPage() {
       setErro("Preencha todos os campos obrigatórios!");
       return;
     }
+    const resultado = login(email, senha);
 
-    router.push("/home");
+    if (!resultado.ok) {
+      setErro(resultado.msg);
+      return;
+    }
+
+    router.push("./");
   };
 
   return (
