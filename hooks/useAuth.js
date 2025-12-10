@@ -7,11 +7,11 @@ const USERS = [
   {
     id: 1,
     nome: "Marquinhos",
-    xp: 112,
+    xp: 190,
     email: "marquinhos@email.com",
-    senha: "123",
+    senha: "123456",
     avatar: "/images/marquinhos.png",
-    pomodoros: 0,
+    pomodoros: 27,
   },
   {
     id: 2,
@@ -27,9 +27,9 @@ const USERS = [
     nome: "Andressa",
     xp: 82,
     email: "andressa@email.com",
-    senha: "123",
+    senha: "1233456",
     avatar: "/images/andressa.png",
-    pomodoros: 0,
+    pomodoros: 12,
   },
   {
     id: 4,
@@ -83,7 +83,7 @@ const USERS = [
     email: "vitinho@email.com",
     senha: "123456",
     avatar: "/images/Vitinho.png",
-    pomodoros: 0,
+    pomodoros: 17,
   },
   {
     id: 10,

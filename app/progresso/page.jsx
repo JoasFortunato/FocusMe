@@ -43,7 +43,7 @@ export default function Progresso() {
   ];
   const dadosPizza = [
     { name: "Concluído", value: usuario.xp },
-    { name: "Restante", value: 200 - usuario.xp }, // supondo meta de 200 xp
+    { name: "Restante", value: 200 - usuario.xp },
   ];
 
   return (
