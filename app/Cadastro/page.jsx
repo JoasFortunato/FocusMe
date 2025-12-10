@@ -31,15 +31,8 @@ export default function CadastrarPage() {
   };
 
   return (
-    <div
-      className="
-        min-h-screen flex items-center justify-between 
-        bg-no-repeat bg-cover
-      "
-      style={{
-        backgroundImage: "linear-gradient(90deg, #8B3DFF 20%, #000000 90%)",
-      }}
-    >
+    <div className="min-h-screen flex items-center justify-between bg-no-repeat bg-cover bg-gradient-to-r from-[#7C3AED] to-black">
+      
       <div className="w-1/2 flex items-center justify-center">
         <Image
           src="/images/Logo_FocusMe.png"
@@ -54,7 +47,7 @@ export default function CadastrarPage() {
         <h1 className="text-2xl font-bold text-center mb-6">Crie sua conta</h1>
 
         <form onSubmit={handleCadastrar} className="flex flex-col gap-4">
-          
+
           <div>
             <label className="block text-sm font-medium">Email *</label>
             <input
@@ -93,7 +86,7 @@ export default function CadastrarPage() {
 
           <button
             type="submit"
-            className="w-full bg-purple-600 text-white p-2 rounded-lg hover:bg-purple-700 transition"
+            className="w-full bg-[#7C3AED] text-white p-2 rounded-lg hover:bg-[#6B21A8] transition"
           >
             Criar conta
           </button>
@@ -105,9 +98,9 @@ export default function CadastrarPage() {
 
         <p className="text-center text-sm mt-4">
           Já possui conta?{" "}
-          <a href="/Login" className="text-blue-600 hover:underline">
+          <Link href="/Login" className="text-blue-600 hover:underline">
             Faça seu login
-          </a>
+          </Link>
         </p>
       </div>
     </div>

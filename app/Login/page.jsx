@@ -8,7 +8,7 @@ import { useAuth } from "@/hooks/useAuth";
 
 export default function LoginPage() {
   const router = useRouter();
-  const { login } = useAuth(); 
+  const { login } = useAuth();
 
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
@@ -21,6 +21,7 @@ export default function LoginPage() {
       setErro("Preencha todos os campos obrigatórios!");
       return;
     }
+
     const resultado = login(email, senha);
 
     if (!resultado.ok) {
@@ -35,11 +36,8 @@ export default function LoginPage() {
     <div
       className="
         min-h-screen flex items-center justify-between 
-        bg-no-repeat bg-cover
+        bg-gradient-to-r from-[#7C3AED] to-black
       "
-      style={{
-        backgroundImage: "linear-gradient(90deg, #8B3DFF 20%, #000000 90%)",
-      }}
     >
       <div className="w-1/2 flex items-center justify-center">
         <Image
@@ -60,7 +58,10 @@ export default function LoginPage() {
             <input
               type="email"
               placeholder="Digite o seu email"
-              className="w-full p-2 border rounded-lg mt-1 bg-white focus:ring-2 focus:ring-purple-500"
+              className="
+                w-full p-2 border rounded-lg mt-1 bg-white 
+                focus:ring-2 focus:ring-purple-500
+              "
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -72,14 +73,20 @@ export default function LoginPage() {
             <input
               type="password"
               placeholder="Digite sua senha"
-              className="w-full p-2 border rounded-lg mt-1 bg-white focus:ring-2 focus:ring-purple-500"
+              className="
+                w-full p-2 border rounded-lg mt-1 bg-white 
+                focus:ring-2 focus:ring-purple-500
+              "
               value={senha}
               onChange={(e) => setSenha(e.target.value)}
               required
             />
 
             <p className="text-right text-sm mt-1">
-              <Link href="/Login/EsqueceuSenha" className="text-blue-600 hover:underline">
+              <Link
+                href="/Login/EsqueceuSenha"
+                className="text-blue-600 hover:underline"
+              >
                 Esqueceu a senha?
               </Link>
             </p>
@@ -87,7 +94,10 @@ export default function LoginPage() {
 
           <button
             type="submit"
-            className="w-full bg-purple-600 text-white p-2 rounded-lg hover:bg-purple-700 transition"
+            className="
+              w-full bg-[#7C3AED] text-white p-2 rounded-lg 
+              hover:bg-[#6B21A8] transition
+            "
           >
             Entrar
           </button>
@@ -99,9 +109,9 @@ export default function LoginPage() {
 
         <p className="text-center text-sm mt-4">
           Não possui conta?{" "}
-          <a href="/Cadastro" className="text-blue-600 hover:underline">
+          <Link href="/Cadastro" className="text-blue-600 hover:underline">
             Cadastre-se aqui
-          </a>
+          </Link>
         </p>
       </div>
     </div>

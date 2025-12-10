@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 export default function EsqueceuSenhaPage() {
-  const router = useRouter(); 
+  const router = useRouter();
 
   const [email, setEmail] = useState("");
   const [erro, setErro] = useState("");
@@ -17,7 +17,7 @@ export default function EsqueceuSenhaPage() {
   const [confirmarSenha, setConfirmarSenha] = useState("");
   const [msgRedefinir, setMsgRedefinir] = useState("");
 
-  const [erroCodigo, setErroCodigo] = useState(""); 
+  const [erroCodigo, setErroCodigo] = useState("");
 
   const codeRefs = [useRef(), useRef(), useRef(), useRef()];
   let codeValues = ["", "", "", ""];
@@ -49,10 +49,10 @@ export default function EsqueceuSenhaPage() {
     const codigoDigitado = codeValues.join("");
 
     if (codigoDigitado === "1234") {
-      setErroCodigo(""); 
+      setErroCodigo("");
       setMostrarRedefinir(true);
     } else {
-      setErroCodigo("Código incorreto!"); 
+      setErroCodigo("Código incorreto!");
     }
   };
 
@@ -73,19 +73,18 @@ export default function EsqueceuSenhaPage() {
       setTimeout(() => {
         router.push("/Login");
       }, 2000);
-
     } else {
-      setMsgRedefinir({ tipo: "erro", texto: "A senha precisa ter no mínimo 6 caracteres" });
+      setMsgRedefinir({
+        tipo: "erro",
+        texto: "A senha precisa ter no mínimo 6 caracteres",
+      });
     }
   };
 
   return (
-    <div
-      className="min-h-screen flex items-center justify-center bg-cover bg-no-repeat relative"
-      style={{
-        backgroundImage: "linear-gradient(90deg, #8B3DFF 20%, #000 90%)",
-      }}
-    >
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-[#7C3AED] to-black bg-cover bg-no-repeat relative">
+
+      {/* Modal - Código */}
       {mostrarCard && !mostrarRedefinir && (
         <div className="absolute inset-0 bg-black/70 flex items-center justify-center z-50">
           <div className="bg-white w-72 p-6 rounded-2xl shadow-2xl text-center">
@@ -120,7 +119,7 @@ export default function EsqueceuSenhaPage() {
 
             <button
               onClick={verificarCodigo}
-              className="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700"
+              className="w-full bg-[#7C3AED] text-white py-2 rounded-lg hover:bg-[#6B21A8]"
             >
               Confirmar
             </button>
@@ -132,6 +131,7 @@ export default function EsqueceuSenhaPage() {
         </div>
       )}
 
+      {/* Modal - Redefinir Senha */}
       {mostrarRedefinir && (
         <div className="absolute inset-0 bg-black/70 flex items-center justify-center z-50">
           <div className="bg-white w-80 p-6 rounded-2xl shadow-2xl">
@@ -166,7 +166,7 @@ export default function EsqueceuSenhaPage() {
 
               <button
                 onClick={handleRedefinirSenha}
-                className="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700"
+                className="w-full bg-[#7C3AED] text-white py-2 rounded-lg hover:bg-[#6B21A8]"
               >
                 Redefinir senha
               </button>
@@ -187,6 +187,7 @@ export default function EsqueceuSenhaPage() {
         </div>
       )}
 
+      {/* Card principal */}
       <div className="w-full max-w-sm bg-white rounded-2xl shadow-lg p-6 relative z-10">
         <h1 className="text-2xl font-bold text-center mb-2">
           Esqueceu sua senha?
@@ -210,7 +211,7 @@ export default function EsqueceuSenhaPage() {
 
           <button
             type="submit"
-            className="w-full bg-purple-600 text-white p-2 rounded-lg hover:bg-purple-700 transition"
+            className="w-full bg-[#7C3AED] text-white p-2 rounded-lg hover:bg-[#6B21A8] transition"
           >
             Enviar código
           </button>
