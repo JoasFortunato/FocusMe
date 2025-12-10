@@ -27,7 +27,7 @@ export default function CadastrarPage() {
     }
 
     setErro("");
-    router.push("/login");
+    router.push("./");
   };
 
   return (
