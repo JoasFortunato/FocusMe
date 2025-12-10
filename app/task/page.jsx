@@ -16,11 +16,13 @@ export default function TaskPage() {
       {id: 2, title: "Revisar redação", done: true},
       {id: 3, title: "Fazer mapa mental", done: false},
     ],
+    claimed: false,
   },
   {id: 102, title: "Biologia", tasks: [
     {id: 1, title: "Fazer resumo", done: false},
     {id: 2, title: "Assistir aula", done: false},
   ],
+  claimed: false,
 },
 ])
 
@@ -34,7 +36,8 @@ function addTask(cardId, title) {
     if (!Array.isArray(prev)) return prev
     return prev.map(card =>
       card.id === cardId
-        ? {...card, tasks: [{id: getNextId(card.tasks), title, done: false}, ...card.tasks]}
+        ? {...card, tasks: [{id: getNextId(card.tasks), title, done: false}, ...card.tasks], 
+        claimed: false,}
         : card
     )
   })
@@ -43,11 +46,28 @@ function addTask(cardId, title) {
 
   //funcao para marcar task como concluida
   function toggleTask(cardId, taskId, checked) {
-      setCards(prev => prev.map(card => card.id === cardId ? {
-        ...card, tasks: card.tasks.map(t => t.id === taskId ? {...t, done: !!checked} : t)}
-      : card
-    ))
-    }
+    setCards(prev =>
+      prev.map(card => {
+        if (card.id !== cardId) return card
+
+        const updatedTasks = card.tasks.map(t =>
+          t.id === taskId ? {...t, done: !!checked} : t
+        )
+
+        const allDone = updatedTasks.length > 0 && updatedTasks.every(t => t.done)
+
+        return {
+          ...card,
+          tasks: updatedTasks,
+          claimed: allDone ? card.claimed : false,
+        }
+      })
+    )
+  }
+
+  function claimCard(cardId) {
+    setCards(prev => prev.map(card => card.id === cardId ? {...card, claimed: true} : card))
+  }
 
   //criação de novos cards
   const [showNewCardModal, setShowNewCardModal] =useState(false)
@@ -57,7 +77,7 @@ function addTask(cardId, title) {
     if(!newCardTitle.trim()) return
 
     const nextId = cards.length  ? Math.max (...cards.map(c => c.id)) + 1:100
-    const newCard = {id:nextId, title:newCardTitle.trim(), tasks:[]}
+    const newCard = {id:nextId, title:newCardTitle.trim(), tasks:[], claimed: false}
 
     setCards(prev=> [...prev, newCard])
     setNewCardTitle("")
@@ -119,7 +139,9 @@ function addTask(cardId, title) {
                 tasks={activeCard.tasks} 
                 title={activeCard.title}
                 onAdd={(title) => addTask(activeCard.id, title)}
-                onToggle={(id, checked) => toggleTask(activeCard.id, id, checked)} />) : 
+                onToggle={(id, checked) => toggleTask(activeCard.id, id, checked)}
+                alreadyCompleted={!!activeCard.claimed}
+                onClaim={() => claimCard(activeCard.id)} />) : 
                 (<div className="text-white font-bold flex justify-center">Selecione um card para visualizar</div>)}
           </div>
 
@@ -131,8 +153,8 @@ function addTask(cardId, title) {
               title={card.title}
               tasks={card.tasks}
               onSwap={() => setActiveCardId(card.id)} //agora so muda o ativo
-              onAddTask={(cardId, title) => addTask(cardId, title)}
-              onToggleTask={(cardId, taskId, checked) => toggleTask(cardId, taskId, checked)}/>
+              onAddTask={(title) => addTask(title)}
+              onToggleTask={(taskId, checked) => toggleTask(taskId, checked)}/>
             ))}
           </div>
         </div>
