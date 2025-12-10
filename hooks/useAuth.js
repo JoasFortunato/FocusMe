@@ -3,9 +3,6 @@ import { createContext, useContext, useState } from "react";
 
 const AuthContext = createContext();
 
-// -------------------------------------------
-//   LISTA GLOBAL DE USUÁRIOS (para ranking)
-// -------------------------------------------
 const USERS = [
   {
     id: 1,
@@ -106,9 +103,6 @@ export function AuthProvider({ children }) {
   // Lista global de todos os usuários
   const [usuarios, setUsuarios] = useState(USERS);
 
-  // -----------------------
-  //        LOGIN
-  // -----------------------
   const login = (email, senha) => {
     const encontrado = usuarios.find(
       (u) => u.email === email && u.senha === senha
@@ -126,9 +120,6 @@ export function AuthProvider({ children }) {
     setUsuario(null);
   };
 
-  // -----------------------
-  //   ALTERAR XP DO USUÁRIO
-  // -----------------------
   const adicionarXp = (id, valor) => {
     setUsuarios((prev) =>
       prev.map((u) =>
@@ -136,7 +127,6 @@ export function AuthProvider({ children }) {
       )
     );
 
-    // se o usuário logado for o mesmo, atualiza também
     if (usuario?.id === id) {
       setUsuario((prev) => ({ ...prev, xp: prev.xp + valor }));
     }

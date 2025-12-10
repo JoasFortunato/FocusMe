@@ -13,8 +13,6 @@ export default function CardTaskPrincipal({ tasks, title, onAdd, onToggle, alrea
   const [showAddModal, setShowAddModal] = useState(false)
   const [showConfirmModal, setShowConfirmModal] = useState(false)
 
-  // impede XP duplicado
-
   const { usuario, adicionarXp } = useAuth()
 
   // verifica se todas as tasks estão concluídas
