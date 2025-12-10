@@ -10,7 +10,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
-  const { usuario, xp } = useAuth(); // <<--- PEGANDO XP E USUÁRIO
+  const { usuario } = useAuth(); // <<--- PEGANDO XP E USUÁRIO
 
   const links = [
     { label: "Timer", href: "/" },
@@ -69,7 +69,7 @@ export default function Navbar() {
             {/* Mostra XP somente logado */}
             {usuario && (
               <div className="flex items-center gap-2 bg-purple-100 px-3 py-1 rounded-xl shadow-sm font-semibold text-[#7C3AED]">
-                ⭐ {xp} XP
+                ⭐ {usuario.xp} XP
               </div>
             )}
 
@@ -134,7 +134,7 @@ export default function Navbar() {
               {/* XP Mobile */}
               {usuario && (
                 <div className="font-semibold text-[#7C3AED] bg-purple-100 rounded-lg p-2 mb-2">
-                  ⭐ XP: {xp}
+                  ⭐ XP: {usuario.xp}
                 </div>
               )}
 
